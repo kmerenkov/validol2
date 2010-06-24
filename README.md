@@ -59,9 +59,10 @@ Scheme is a pattern for data you expect. It is used for both validation and
 type conversion.
 
 Breakdown of `{"page": gt(0)}`:
- 1. {...} - means that we expect a dictionary
- 2. "page": ... - means that we expect only one key with value "page"
- 3. gt(0) - means that we expect an numeric which is greater than zero (also conversion to integer happens here)
+
+  1. {...} - means that we expect a dictionary
+  2. "page": ... - means that we expect only one key with value "page"
+  3. gt(0) - means that we expect an numeric which is greater than zero (also conversion to integer happens here)
 
 
 #### Extensibility
