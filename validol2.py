@@ -83,16 +83,11 @@ def str_strict(obj):
 
 def any_of(xs):
     def _any_of(obj):
-        ok = False
-        result = None
         for x in xs:
             try:
-                result = validate(x, obj)
-                ok = True
-                break
+                return validate(x, obj)
             except:
                 pass
-        if not ok:
             raise ValidationError("Failed any_of validation: %s" % (obj,))
         return result
     return _any_of
