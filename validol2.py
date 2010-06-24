@@ -120,6 +120,13 @@ def optional(scheme):
         return validate(scheme, obj)
     return _optional
 
+def regexp(expr):
+    def _regexp(obj):
+        if expr.match(obj):
+            return obj
+        raise ValidationError("Failed regexp validation: %s" % (obj,))
+    return _regexp
+
 
 # actual implementation
 

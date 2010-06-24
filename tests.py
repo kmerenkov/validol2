@@ -18,8 +18,8 @@ __author__  = "Konstantin Merenkov <kmerenkov@gmail.com>"
 
 
 import unittest
-from validol2 import validate, sequence, boolean, in_range, optional, ValidationError
-
+import re
+from validol2 import validate, sequence, boolean, in_range, optional, regexp, ValidationError
 
 
 class TestSimple(unittest.TestCase):
@@ -45,6 +45,11 @@ class TestExtensions(unittest.TestCase):
 
     def test_in_range(self):
         self.assertEqual(validate(in_range(0, 5), 3), 3)
+
+    def test_regexp(self):
+        r = re.compile('.*FOO.*')
+        self.assertEqual(validate(regexp(r), 'barFOObar'), 'barFOObar')
+
 
 class TestDict(unittest.TestCase):
     def test_optional(self):
