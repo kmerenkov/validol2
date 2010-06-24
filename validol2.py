@@ -108,14 +108,16 @@ def validate_dict(scheme, obj):
     if len(scheme) != len(obj):
         raise ValidationError("Failed dict validation: %s" % (obj,))
     validated = {}
+    scheme_dict = dict(scheme)
     for okey, ovalue in obj.items():
         ok = False
-        for skey, svalue in scheme.items():
+        for skey, svalue in scheme_dict.items():
             try:
                 k = validate(skey, okey)
                 v = validate(svalue, ovalue)
                 validated[k] = v
                 ok = True
+                scheme_dict.pop(skey)
                 break
             except Exception:
                 pass
