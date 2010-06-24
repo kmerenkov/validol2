@@ -19,7 +19,7 @@ __author__  = "Konstantin Merenkov <kmerenkov@gmail.com>"
 
 import unittest
 import re
-from validol2 import validate, sequence, boolean, in_range, optional, regexp, ValidationError
+from validol2 import *
 
 
 class TestSimple(unittest.TestCase):
@@ -36,6 +36,10 @@ class TestExtensions(unittest.TestCase):
         self.assertEqual(validate(sequence([0, 1, 2, 3]), [0, 1, 2, 3]), [0, 1, 2, 3])
         self.assertEqual(validate(sequence((bool, str)), (True, "Foo")), (True, "Foo"))
         self.assertEqual(validate(set([1, 2, 3]), set([3, 2, 1])), set([2, 1, 3]))
+
+    def test_nums(self):
+        self.assertEqual(validate(gt(0), 10), 10)
+        self.assertEqual(validate(lt(0), -10), -10)
 
     def test_boolean(self):
         self.assertEqual(validate(boolean, 0), False)

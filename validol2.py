@@ -94,6 +94,30 @@ def in_range(start, end):
         return obj
     return _in_range
 
+def lt(value):
+    def _lt(obj):
+        ok = False
+        try:
+            ok = type(value)(obj) < value
+        except Exception:
+            pass
+        if not ok:
+            raise ValidationError("Failed gt validation: %s" % (obj,))
+        return type(value)(obj)
+    return _lt
+
+def gt(value):
+    def _gt(obj):
+        ok = False
+        try:
+            ok = type(value)(obj) > value
+        except Exception:
+            pass
+        if not ok:
+            raise ValidationError("Failed gt validation: %s" % (obj,))
+        return type(value)(obj)
+    return _gt
+
 def sequence(scheme):
     def _sequence(obj):
         return validate_iterable(cycle(scheme), obj)
