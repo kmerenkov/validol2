@@ -6,6 +6,13 @@ Useful GET/POST-parameters or JSON parsing* and validation tool.
  * It doesn't actually parse textual data. It operates on python data structures.
 
 
+Why
+---
+ * Checks that supplied data is valid
+ * Automatically converts types for you
+ * Very extensible
+ * License that gives you unlimited usage scenarios :-)
+
 Usage
 -----
     >>> validate(str, "foo")
