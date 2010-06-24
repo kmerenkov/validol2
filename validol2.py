@@ -118,12 +118,16 @@ def any_of(xs):
 
 def validate_iterable(scheme, obj):
     results = []
+    t = type(obj)
     for s, o in izip(scheme, obj):
         try:
             results.append(validate(s, o))
         except (TypeError, ValueError):
             raise ValidationError("Failed iterable validation: %s" % (obj,))
-    return results
+    try:
+        return t(results)
+    except Exception:
+        return results
 
 def validate_dict(scheme, obj):
     if len(scheme) != len(obj):
