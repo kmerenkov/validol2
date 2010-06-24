@@ -58,6 +58,8 @@ def validate(scheme, obj):
     ... except ValidationError, e:
     ...    print str(e)
     Failed in_range validation: 15
+    >>> validate({optional("foo"): "bar"}, {})
+    {}
     """
     if callable(scheme):
         return scheme(obj)
@@ -113,6 +115,11 @@ def any_of(xs):
         return result
     return _any_of
 
+def optional(scheme):
+    def _optional(obj):
+        return validate(scheme, obj)
+    return _optional
+
 
 # actual implementation
 
@@ -130,8 +137,6 @@ def validate_iterable(scheme, obj):
         return results
 
 def validate_dict(scheme, obj):
-    if len(scheme) != len(obj):
-        raise ValidationError("Failed dict validation: %s" % (obj,))
     validated = {}
     scheme_dict = dict(scheme)
     for okey, ovalue in obj.items():
@@ -148,6 +153,9 @@ def validate_dict(scheme, obj):
                 pass
         if not ok:
             raise ValidationError("Failed dict validation: %s" % ((okey, ovalue),))
+    for s in scheme_dict:
+        if not (callable(s) and getattr(s, "func_name", None) == '_optional'):
+            raise ValidationError("Failed dict validation: %s" % (obj,))
     return validated
 
 
