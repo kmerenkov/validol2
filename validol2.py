@@ -71,7 +71,9 @@ def validate(scheme, obj):
 
 # special validators
 def boolean(obj):
-    ol = obj.lower()
+    if type(obj) is bool:
+        return obj
+    ol = str(obj).lower()
     if ol in ["1", "true"]:
         return True
     elif ol in ["0", "false"]:
