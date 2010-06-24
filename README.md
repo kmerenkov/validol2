@@ -93,6 +93,10 @@ Tips on testing
 
 If nothing is printed then tests pass.
 
+    python tests.py
+
+Eventually I plan to move all the tests into tests.py (I don't like doctests).
+
 Credits
 -------
  * [Konstantin Merenkov](http://kmerenkov.ru/)
