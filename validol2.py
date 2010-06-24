@@ -118,7 +118,7 @@ def validate_iterable(scheme, obj):
     results = []
     for s, o in izip(scheme, obj):
         try:
-            results.append(s(o))
+            results.append(validate(s, o))
         except (TypeError, ValueError):
             raise ValidationError("Failed iterable validation: %s" % (obj,))
     return results
