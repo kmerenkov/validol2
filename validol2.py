@@ -124,17 +124,22 @@ def optional(scheme):
 # actual implementation
 
 def validate_iterable(scheme, obj):
-    results = []
-    t = type(obj)
-    for s, o in izip(scheme, obj):
+    if type(scheme) is set and type(obj) is set:
+        if scheme == obj:
+            return obj
+        raise ValidationError("Failed iterable validation: %s" % (obj,))
+    else:
+        results = []
+        t = type(obj)
+        for s, o in izip(scheme, obj):
+            try:
+                results.append(validate(s, o))
+            except (TypeError, ValueError):
+                raise ValidationError("Failed iterable validation: %s" % (obj,))
         try:
-            results.append(validate(s, o))
-        except (TypeError, ValueError):
-            raise ValidationError("Failed iterable validation: %s" % (obj,))
-    try:
-        return t(results)
-    except Exception:
-        return results
+            return t(results)
+        except Exception:
+            return results
 
 def validate_dict(scheme, obj):
     validated = {}
