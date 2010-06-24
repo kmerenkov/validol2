@@ -51,6 +51,13 @@ def validate(scheme, obj):
     ... except ValidationError, e:
     ...    print str(e)
     Failed any_of validation: 40
+    >>> validate(in_range(0, 10), 5)
+    5
+    >>> try:
+    ...    validate(in_range(0, 10), 15)
+    ... except ValidationError, e:
+    ...    print str(e)
+    Failed in_range validation: 15
     """
     if callable(scheme):
         return scheme(obj)
@@ -70,6 +77,18 @@ def boolean(obj):
     elif ol in ["0", "false"]:
         return False
     raise ValidationError("Failed bool validation: %s" % (obj,))
+
+def in_range(start, end):
+    def _in_range(obj):
+        ok = False
+        try:
+            ok = start <= float(obj) <= end
+        except Exception:
+            pass
+        if not ok:
+            raise ValidationError("Failed in_range validation: %s" % (obj,))
+        return obj
+    return _in_range
 
 def sequence(scheme):
     def _sequence(obj):
