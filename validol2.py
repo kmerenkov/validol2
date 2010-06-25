@@ -34,7 +34,8 @@ def validate(scheme, obj):
     10
     >>> validate([int], ["10"])
     [10]
-    >>> validate(sequence([int]), xrange(10))
+    >>> from itertools import cycle
+    >>> validate(cycle([int]), xrange(10))
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     >>> validate({"user": str,
     ...           "blocked": boolean,
@@ -117,11 +118,6 @@ def gt(value):
             raise ValidationError("Failed gt validation: %s" % (obj,))
         return type(value)(obj)
     return _gt
-
-def sequence(scheme):
-    def _sequence(obj):
-        return validate_iterable(cycle(scheme), obj)
-    return _sequence
 
 def str_strict(obj):
     if isinstance(obj, basestring):

@@ -19,6 +19,7 @@ __author__  = "Konstantin Merenkov <kmerenkov@gmail.com>"
 
 import unittest
 import re
+from itertools import cycle
 from validol2 import *
 
 
@@ -32,9 +33,9 @@ class TestSimple(unittest.TestCase):
 
 class TestExtensions(unittest.TestCase):
     def test_sequence(self):
-        self.assertEqual(validate(sequence([int]), ["10"]), [10])
-        self.assertEqual(validate(sequence([0, 1, 2, 3]), [0, 1, 2, 3]), [0, 1, 2, 3])
-        self.assertEqual(validate(sequence((bool, str)), (True, "Foo")), (True, "Foo"))
+        self.assertEqual(validate([int], ["10"]), [10])
+        self.assertEqual(validate(cycle([0, 1, 2, 3]), [0, 1, 2, 3]), [0, 1, 2, 3])
+        self.assertEqual(validate(cycle((bool, str)), (True, "Foo")), (True, "Foo"))
         self.assertEqual(validate(set([1, 2, 3]), set([3, 2, 1])), set([2, 1, 3]))
 
     def test_nums(self):
@@ -59,7 +60,7 @@ class TestDict(unittest.TestCase):
     def test_optional(self):
         self.assertEqual(validate({"email": str,
                                    "blocked": boolean,
-                                    optional("interests"): sequence([str])},
+                                    optional("interests"): cycle([str])},
                                   {"email": "john@example.com",
                                    "blocked": False,
                                    "interests": ["fishing", "cooking"]}),
