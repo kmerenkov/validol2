@@ -3,7 +3,7 @@
 #            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 #                    Version 2, December 2004
 #
-# Copyright (C) 2008 Konstantin Merenkov <kmerenkov@gmail.com>
+# Copyright (C) 2010 Konstantin Merenkov <kmerenkov@gmail.com>
 # Everyone is permitted to copy and distribute verbatim or modified
 # copies of this license document, and changing it is allowed as long
 # as the name is changed.
@@ -20,10 +20,10 @@ import validol2
 import re
 
 def get_version():
-    return validol.__version__
+    return validol2.__version__
 
 def get_author():
-    return validol.__author__
+    return validol2.__author__
 
 def get_author_email():
     author = get_author()
@@ -44,5 +44,5 @@ setup(name='validol2',
       maintainer_email=get_author_email(),
       license='WTFPL version 2 (http://sam.zoy.org/wtfpl/)',
       url='http://github.com/kmerenkov/validol2/',
-      py_modules=['validol'])
+      py_modules=['validol2'])
 
