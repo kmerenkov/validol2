@@ -68,6 +68,14 @@ class TestDict(unittest.TestCase):
                           "blocked": False,
                           "interests": ["fishing", "cooking"]})
 
+    def test_bug_dict_scheme_detection_works_improperly(self):
+        try:
+            self.assertRaises(ValidationError,
+                              validate, {'foo': 'bar'}, [1])
+        except Exception as e:
+            msg = 'ValidationError was not raised, got %s instead: %s'
+            self.fail(msg % (e.__class__.__name__, e, ))
+
 
 if __name__ == '__main__':
     unittest.main()

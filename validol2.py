@@ -64,10 +64,10 @@ def validate(scheme, obj):
     """
     if callable(scheme):
         return scheme(obj)
-    elif hasattr(scheme, 'items') and hasattr(scheme, 'items'):
+    elif hasattr(scheme, 'items') and hasattr(obj, 'items'):
         return validate_dict(scheme, obj)
     elif hasattr(scheme, '__iter__') and hasattr(obj, '__iter__'):
-            return validate_iterable(scheme, obj)
+        return validate_iterable(scheme, obj)
     elif scheme == obj:
         return obj
     raise ValidationError("Don't know how to validate %s against %s" % (obj, scheme))
@@ -171,6 +171,7 @@ def validate_iterable(scheme, obj):
 def validate_dict(scheme, obj):
     validated = {}
     scheme_dict = dict(scheme)
+    
     for okey, ovalue in obj.items():
         ok = False
         for skey, svalue in scheme_dict.items():
