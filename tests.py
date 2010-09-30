@@ -72,8 +72,10 @@ class TestDict(unittest.TestCase):
         try:
             self.assertRaises(ValidationError,
                               validate, {'foo': 'bar'}, [1])
+        except AssertionError:
+            raise
         except Exception as e:
-            msg = 'ValidationError was not raised, got %s instead: %s'
+            msg = 'ValidationError not raised, got %s instead: %s'
             self.fail(msg % (e.__class__.__name__, e, ))
 
 
